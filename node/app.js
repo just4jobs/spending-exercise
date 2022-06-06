@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get("/spendings", (req, res) => {
+app.get("/spendings/", (req, res) => {
   res.send([
     {
       description: "Mango",

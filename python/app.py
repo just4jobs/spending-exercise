@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/spendings", methods=["GET"])
+@app.route("/spendings/", methods=["GET"])
 def get_spendings():
     return jsonify([
         {
