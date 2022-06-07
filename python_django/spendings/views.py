@@ -1,12 +1,13 @@
-from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from spendings.models import Spending
+from spendings.serializers import SpendingSerializer
 
 
-# TODO: eliminate safe turned off
+@api_view(['GET'])
 def spendings(request):
     if request.method == 'GET':
-        return JsonResponse([{
-            "description": "Mango",
-            "amount": 1200,
-            "spent_at": "2022-02-23T14:47:20.381Z",
-            "currency": "USD",
-        }], safe=False)
+        spendings = Spending.objects.all()
+        serializer = SpendingSerializer(spendings, many=True)
+        return Response(serializer.data)

@@ -1,0 +1,12 @@
+[
+  {
+    "model": "spendings.spending",
+    "pk": 1,
+    "fields": {
+      "description": "Mango",
+      "amount": 1200,
+      "spent_at": "2022-02-23T14:47:20.381Z",
+      "currency": "USD"
+    }
+  }
+]
