@@ -19,9 +19,38 @@ export default function Form() {
     });
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log("oh hi", state)
+
+    return fetch(`http://localhost:5000/spendings/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(state)
+    })
+      .then(async (res) => {
+        const body = await res.json();
+        return {
+          status: res.status,
+          body,
+        };
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("success")
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        event.preventDefault();
+      });
+  }
+
   return (
     <>
-      <FormStyles>
+      <FormStyles onSubmit={handleSubmit}>
         <InputStyles
           type='text'
           placeholder='description'
