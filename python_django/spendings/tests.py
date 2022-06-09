@@ -35,3 +35,12 @@ class TestSpending(TestCase):
         response = self.client.post('/spendings/', new_spending, content_type='application/json')
         self.assertEqual(200, response.status_code)
         mock_spending_create.assert_called_with(description="Mango", amount=1200, currency="USD")
+
+    def test_post_incomplete_spending(self):
+        new_spending = {
+            "description": "Mango",
+            "spent_at": "2022-02-23T14:47:20.381Z",
+            "currency": "USD"
+        }
+        response = self.client.post('/spendings/', new_spending)
+        self.assertEqual(400, response.status_code)
