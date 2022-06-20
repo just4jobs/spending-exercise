@@ -7,15 +7,19 @@ import Layout from './components/Layout';
 export default function App() {
   const [spendings, setSpendings] = useState([]);
 
+  const addSpending = (newSpending) => {
+    setSpendings([...spendings, newSpending])
+  }
+
   return (
     <>
       <Layout>
-        <Form />
-        <FiltersAndOrderings />
-        <SpendingList
-          spendings={spendings}
-          setSpendings={setSpendings}
-        />
+          <Form addSpending={addSpending}/>
+          <FiltersAndOrderings />
+          <SpendingList
+            spendings={spendings}
+            setSpendings={setSpendings}
+          />
       </Layout>
     </>
   );

@@ -3,7 +3,7 @@ import { InputStyles } from '../styles/InputStyles';
 import { SelectStyles } from '../styles/SelectStyles';
 import { FormStyles } from '../styles/ComponentStyles';
 
-export default function Form() {
+export default function Form(props) {
   const [state, setState] = useState({
     description: '',
     amount: 0,
@@ -21,7 +21,6 @@ export default function Form() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("oh hi", state)
 
     return fetch(`http://localhost:5000/spendings/`, {
       method: "POST",
@@ -37,7 +36,7 @@ export default function Form() {
       })
       .then((response) => {
         if (response.status === 200) {
-          console.log("success")
+          props.addSpending(response.body);
         }
       })
       .catch((err) => {
