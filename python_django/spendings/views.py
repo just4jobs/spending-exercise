@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from django.db.models import Model
 from spendings.models import Spending
 from spendings.serializers import SpendingSerializer
 
@@ -27,9 +28,15 @@ def spendings(request):
             new_spending_serializer = SpendingSerializer(data=new_spending_data)
             if new_spending_serializer.is_valid():
                 data = new_spending_serializer.save()
-                serialized_data = json.loads(serialize('json', [data]))[0]['fields']
+                serialized_data = serialize_model_to_single_dict(data)
                 return JsonResponse(serialized_data)
             else:
                 return Response({'message': 'Invalid spending data'}, status=400, content_type='application/json')
         else:
             return Response({'message': 'No spending data'}, status=400, content_type='application/json')
+
+
+def serialize_model_to_single_dict(data: Model) -> dict:
+    serialized_data = serialize('json', [data])
+    json_data = json.loads(serialized_data)[0]
+    return json_data['fields']
