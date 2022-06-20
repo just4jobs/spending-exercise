@@ -1,9 +1,12 @@
-from http import client
+import json
+from datetime import datetime
 from unittest.mock import patch
 from django.test import (
     Client,
     TestCase,
 )
+
+from spendings.models import Spending
 
 
 class TestSpending(TestCase):
@@ -29,11 +32,20 @@ class TestSpending(TestCase):
         new_spending = {
             "description": "Mango",
             "amount": 1200,
-            "spent_at": "2022-02-23T14:47:20.381Z",
             "currency": "USD"
         }
-        response = self.client.post('/spendings/', new_spending, content_type='application/json')
+        mock_spending_create.return_value = Spending(
+            description="Mango",
+            amount=1200,
+            spent_at=datetime.strptime("2022-02-23T14:47:20.381Z", "%Y-%m-%dT%H:%M:%S.%fZ"),
+            currency="USD",
+        )
+        response = self.client.post('/spendings/', json.dumps(new_spending), content_type='application/json')
         self.assertEqual(200, response.status_code)
+        self.assertEqual(
+            b'{"description": "Mango", "amount": 1200, "spent_at": "2022-02-23T14:47:20.381", "currency": "USD"}',
+            response.content
+        )
         mock_spending_create.assert_called_with(description="Mango", amount=1200, currency="USD")
 
     def test_post_incomplete_spending(self):
