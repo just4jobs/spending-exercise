@@ -1,12 +1,11 @@
 import logging
 import json
 
-from django.core.serializers import serialize
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from django.db.models import Model
+from spendings.helpers import serialize_model_to_single_dict
 from spendings.models import Spending
 from spendings.serializers import SpendingSerializer
 
@@ -34,9 +33,3 @@ def spendings(request):
                 return Response({'message': 'Invalid spending data'}, status=400, content_type='application/json')
         else:
             return Response({'message': 'No spending data'}, status=400, content_type='application/json')
-
-
-def serialize_model_to_single_dict(data: Model) -> dict:
-    serialized_data = serialize('json', [data])
-    json_data = json.loads(serialized_data)[0]
-    return json_data['fields']
