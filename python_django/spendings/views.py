@@ -1,7 +1,8 @@
 import logging
-from email import message
 import json
 
+from django.core.serializers import serialize
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -25,8 +26,9 @@ def spendings(request):
         if new_spending_data:
             new_spending_serializer = SpendingSerializer(data=new_spending_data)
             if new_spending_serializer.is_valid():
-                new_spending_serializer.save()
-                return Response(new_spending_data, content_type='application/json')
+                data = new_spending_serializer.save()
+                serialized_data = json.loads(serialize('json', [data]))[0]['fields']
+                return JsonResponse(serialized_data)
             else:
                 return Response({'message': 'Invalid spending data'}, status=400, content_type='application/json')
         else:
