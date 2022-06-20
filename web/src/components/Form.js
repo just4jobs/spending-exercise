@@ -56,6 +56,7 @@ export default function Form(props) {
           name='description'
           value={state.description}
           onChange={handleChange}
+          data-testid='add_spending_description'
         />
         <InputStyles
           type='number'
@@ -63,16 +64,22 @@ export default function Form(props) {
           name='amount'
           value={state.amount}
           onChange={handleChange}
+          data-testid='add_spending_amount'
         />
         <SelectStyles
           name='currency'
           value={state.currency}
           onChange={handleChange}
+          data-testid='add_spending_currency'
         >
           <option value='HUF'>HUF</option>
           <option value='USD'>USD</option>
         </SelectStyles>
-        <InputStyles type='submit' value='Save' />
+        <InputStyles 
+          type='submit'
+          data-testid='add_spending_submit'
+          value='Save'
+        />
       </FormStyles>
     </>
   );
