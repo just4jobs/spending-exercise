@@ -22,7 +22,7 @@ def spendings(request):
             new_spending_data = json.loads(request_body.decode('utf-8'))
         except Exception as ex:
             logging.error(ex)
-            return Response({'message': 'Inappropriate spending data'}, status=400, content_type='application/json')
+            return JsonResponse({'message': 'Inappropriate spending data'}, status=400)
         if new_spending_data:
             new_spending_serializer = SpendingSerializer(data=new_spending_data)
             if new_spending_serializer.is_valid():
@@ -30,6 +30,6 @@ def spendings(request):
                 serialized_data = serialize_model_to_single_dict(data)
                 return JsonResponse(serialized_data)
             else:
-                return Response({'message': 'Invalid spending data'}, status=400, content_type='application/json')
+                return JsonResponse(new_spending_serializer.errors, status=400)
         else:
-            return Response({'message': 'No spending data'}, status=400, content_type='application/json')
+            return JsonResponse({'message': 'No spending data'}, status=400)
