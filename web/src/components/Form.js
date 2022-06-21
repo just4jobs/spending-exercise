@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { InputStyles } from '../styles/InputStyles';
 import { SelectStyles } from '../styles/SelectStyles';
 import { FormStyles } from '../styles/ComponentStyles';
+import FormErrorMessages from './FormErrorMessages';
 
 export default function Form(props) {
   const [state, setState] = useState({
@@ -9,6 +10,7 @@ export default function Form(props) {
     amount: 0,
     currency: 'USD',
   });
+  const [errorMessages, setErrorMessages] = useState(null);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -29,15 +31,17 @@ export default function Form(props) {
     })
       .then(async (res) => {
         const body = await res.json();
+        if (res.status === 200) {
+          props.addSpending(body);
+          setErrorMessages(null)
+        }
+        else if (res.status === 400) {
+          setErrorMessages(body);
+        }
         return {
           status: res.status,
           body,
         };
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          props.addSpending(response.body);
-        }
       })
       .catch((err) => {
         console.error(err);
@@ -80,6 +84,7 @@ export default function Form(props) {
           data-testid='add_spending_submit'
           value='Save'
         />
+        {errorMessages && <FormErrorMessages errors={errorMessages}/>}
       </FormStyles>
     </>
   );
