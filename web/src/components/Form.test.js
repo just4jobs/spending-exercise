@@ -62,3 +62,29 @@ it('save calls API to add new spending', async () => {
   global.fetch.mockRestore();
 
 });
+
+it('the form is emptied after submit', async () => {
+  
+
+  await (async () => render(<Form />));
+
+  // When
+
+  const description = screen.getByTestId('add_spending_description');
+  fireEvent.change(description, { target: { value: 'Mango' } });
+
+  const amount = screen.getByTestId('add_spending_amount');
+  fireEvent.input(amount, { target: { value: 1200 } });
+
+  const currency = screen.getByTestId('add_spending_currency');
+  fireEvent.change(currency, 'USD');
+
+  const submit = screen.getByTestId('add_spending_submit');
+  fireEvent.click(submit);
+
+  // Then
+
+  expect(description.value).toBe(null);
+  expect(amount.value).toBe(null);
+
+});
