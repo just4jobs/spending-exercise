@@ -15,7 +15,7 @@ class TestSpending(TestCase):
         self.client = Client()
         super().setUp()
 
-    @patch('spendings.models.Spending.objects.all')
+    @patch('spendings.models.Spending.objects.order_by')
     def test_get_spending(self, mock_spendings):
         mock_spendings.return_value = [{
             "description": "Mango",
@@ -29,6 +29,11 @@ class TestSpending(TestCase):
             b'[{"description":"Mango","amount":1200,"spent_at":"2022-02-23T14:47:20.381Z","currency":"USD"}]',
             response.content
         )
+
+    @patch('spendings.models.Spending.objects.order_by')
+    def test_get_spending_ordering(self, mock_filter):
+        self.client.get('/spendings/?order_by=amount')
+        mock_filter.assert_called_with('amount')
 
     @patch('spendings.models.Spending.objects.create')
     def test_post_spending(self, mock_spending_create):
