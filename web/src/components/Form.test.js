@@ -29,7 +29,7 @@ it('save calls API to add new spending', async () => {
     )
   );
 
-  await (async () => render(<Form />));
+  await act(async () => render(<Form />));
 
   // When
 
@@ -64,9 +64,17 @@ it('save calls API to add new spending', async () => {
 });
 
 it('the form is emptied after submit', async () => {
-  
 
-  await (async () => render(<Form />));
+  // Given
+
+  jest.spyOn(global, "fetch").mockImplementation(
+    () => Promise.resolve(
+      new Response(JSON.stringify({}), {
+          status: 200,
+      }))
+  );
+
+  await act(async () => render(<Form addSpending={() => {}}/>));
 
   // When
 
@@ -84,7 +92,8 @@ it('the form is emptied after submit', async () => {
 
   // Then
 
-  expect(description.value).toBe(null);
-  expect(amount.value).toBe(null);
+  expect(description.value).toBe('');
+  expect(amount.value).toBe(0);
+  expect(currency.value).toBe('USD');
 
 });
