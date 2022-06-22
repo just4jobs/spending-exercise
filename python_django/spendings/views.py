@@ -15,9 +15,8 @@ def spendings(request):
     if request.method == 'GET':
         order_by = request.GET.get('order_by', '-spent_at')
         filtering = request.GET.get('filtering')
-        spendings = Spending.objects.order_by(order_by)
-        if filtering:
-            spendings = spendings.filter(currency=filtering)
+        # unfortunately this looks a bit dumb but the previous version of this did not work with mocking in tests
+        spendings = Spending.objects.filter(currency=filtering).order_by(order_by) if filtering else Spending.objects.order_by(order_by)
         serializer = SpendingSerializer(spendings, many=True)
         return Response(serializer.data)
     if request.method == 'POST':

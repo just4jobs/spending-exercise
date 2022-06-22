@@ -31,9 +31,16 @@ class TestSpending(TestCase):
         )
 
     @patch('spendings.models.Spending.objects.order_by')
-    def test_get_spending_ordering(self, mock_filter):
-        self.client.get('/spendings/?order_by=amount')
-        mock_filter.assert_called_with('amount')
+    def test_get_spending_ordering(self, mock_ordering):
+        response = self.client.get('/spendings/?order_by=amount')
+        mock_ordering.assert_called_with('amount')
+        self.assertEqual(200, response.status_code)
+
+    @patch('spendings.models.Spending.objects.filter')
+    def test_get_spending_filtering(self, mock_filter):
+        response = self.client.get('/spendings/?order_by=amount&filtering=HUF')
+        mock_filter.assert_called_with(currency='HUF')
+        self.assertEqual(200, response.status_code)
 
     @patch('spendings.models.Spending.objects.create')
     def test_post_spending(self, mock_spending_create):
