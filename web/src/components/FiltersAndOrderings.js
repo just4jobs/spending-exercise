@@ -21,14 +21,7 @@ export default function CurrencyFilter({currencies, setOrdering}) {
           </select>
         </Orderings>
         <CurrencyFilters>
-          <li>
-            <CurrencyButton
-              name=''
-            >
-              ALL
-            </CurrencyButton>
-          </li>
-          {currencies.map(currency => <li key={currency}>
+          {['ALL', ...currencies].map(currency => <li key={currency}>
             <CurrencyButton
               name={currency}
             >
