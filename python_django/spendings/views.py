@@ -13,7 +13,8 @@ from spendings.serializers import SpendingSerializer
 @api_view(['GET', 'POST'])
 def spendings(request):
     if request.method == 'GET':
-        spendings = Spending.objects.all()
+        order_by = request.GET.get('order_by', '-spent_at')
+        spendings = Spending.objects.order_by(order_by)
         serializer = SpendingSerializer(spendings, many=True)
         return Response(serializer.data)
     if request.method == 'POST':
