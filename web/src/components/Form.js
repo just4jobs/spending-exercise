@@ -94,8 +94,7 @@ export default function Form(props) {
           onChange={handleChange}
           data-testid='add_spending_currency'
         >
-          <option value='HUF'>HUF</option>
-          <option value='USD'>USD</option>
+          {props.currencies.map(currency => <option value={currency} key={currency}>{currency}</option>)}
         </SelectStyles>
         <InputStyles 
           type='submit'

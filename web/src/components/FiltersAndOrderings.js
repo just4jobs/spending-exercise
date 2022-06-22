@@ -2,8 +2,7 @@ import React from 'react';
 
 import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton } from '../styles/ComponentStyles';
 
-export default function CurrencyFilter({
-}) {
+export default function CurrencyFilter(props) {
 
   return (
     <>
@@ -24,20 +23,13 @@ export default function CurrencyFilter({
               ALL
             </CurrencyButton>
           </li>
-          <li>
+          {props.currencies.map(currency => <li key={currency}>
             <CurrencyButton
-              name='HUF'
+              name={currency}
             >
-              HUF
+              {currency}
             </CurrencyButton>
-          </li>
-          <li>
-            <CurrencyButton
-              name='USD'
-            >
-              USD
-            </CurrencyButton>
-          </li>
+          </li>)}
         </CurrencyFilters>
       </FiltersWrapper>
     </>

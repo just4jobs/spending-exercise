@@ -11,11 +11,16 @@ export default function App() {
     setSpendings([...spendings, newSpending])
   }
 
+  const currencies = ['HUF', 'USD']
+
   return (
     <>
       <Layout>
-          <Form addSpending={addSpending}/>
-          <FiltersAndOrderings />
+          <Form 
+            addSpending={addSpending}
+            currencies={currencies}
+          />
+          <FiltersAndOrderings currencies={currencies}/>
           <SpendingList
             spendings={spendings}
             setSpendings={setSpendings}
