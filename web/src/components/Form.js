@@ -4,12 +4,18 @@ import { SelectStyles } from '../styles/SelectStyles';
 import { FormStyles } from '../styles/ComponentStyles';
 import FormErrorMessages from './FormErrorMessages';
 
+const DEFAULT_DESCRIPTION = '';
+const DEFAULT_AMOUNT = 0;
+const DEFAULT_CURRENCY = 'USD';
+
+const DEFAULT_STATE = {
+  description: DEFAULT_DESCRIPTION,
+  amount: DEFAULT_AMOUNT,
+  currency: DEFAULT_CURRENCY,
+}
+
 export default function Form(props) {
-  const [state, setState] = useState({
-    description: '',
-    amount: 0,
-    currency: 'USD',
-  });
+  const [state, setState] = useState(DEFAULT_STATE);
   const [errorMessages, setErrorMessages] = useState(null);
 
   function handleChange(e) {
