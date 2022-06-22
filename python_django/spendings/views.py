@@ -14,7 +14,10 @@ from spendings.serializers import SpendingSerializer
 def spendings(request):
     if request.method == 'GET':
         order_by = request.GET.get('order_by', '-spent_at')
+        filtering = request.GET.get('filtering')
         spendings = Spending.objects.order_by(order_by)
+        if filtering:
+            spendings = spendings.filter(currency=filtering)
         serializer = SpendingSerializer(spendings, many=True)
         return Response(serializer.data)
     if request.method == 'POST':
