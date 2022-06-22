@@ -31,6 +31,13 @@ export default function Form(props) {
     });
   }
 
+  const restoreDefaults = async () => {
+    document.getElementsByName(FORM_INPUT_NAME_DESCRIPTION)[0].value = DEFAULT_DESCRIPTION;
+    document.getElementsByName(FORM_INPUT_NAME_AMOUNT)[0].value = DEFAULT_AMOUNT;
+    document.getElementsByName(FORM_INPUT_NAME_CURRENCY)[0].value = DEFAULT_CURRENCY;
+    setState(DEFAULT_STATE);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -43,7 +50,8 @@ export default function Form(props) {
         const body = await res.json();
         if (res.status === 200) {
           props.addSpending(body);
-          setErrorMessages(null)
+          setErrorMessages(null);
+          restoreDefaults();
         }
         else if (res.status === 400) {
           setErrorMessages(body);
