@@ -29,7 +29,7 @@ it('save calls API to add new spending', async () => {
     )
   );
 
-  await act(async () => render(<Form />));
+  await (async () => render(<Form />));
 
   // When
 
