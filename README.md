@@ -2,6 +2,44 @@
 
 Welcome to the coding challenge portion of the Polygence Engineering interview! Thank you for taking the time to go through this exercise and show us what you can contribute to the team.
 
+## Getting Started
+
+1. Set up and start the API (http://localhost:5000) - created using **Python 3.9**:
+
+```shell
+cd python_django
+```
+
+(only required before first run:)
+
+```shell
+./install.sh
+```
+
+start server:
+
+```shell
+./start_server.sh
+```
+
+1. Set up and start client (http://localhost:3000) - best run using **Node 14.17.x**:
+
+```shell
+cd web
+```
+
+(only required before first run:)
+
+```shell
+npm i
+```
+
+start client:
+
+```shell
+npm start
+```
+
 ## Project overview
 
 ![](app.png)
@@ -35,7 +73,7 @@ A spending JSON object looks something like this:
 
 ### Technical requirements
 
-- Use Git and share the project on GitHub
+- ✓ Use Git and share the project on GitHub
 - The backend solution can be written in any programming language
   - We have created a scaffolded Python/Flask and a Node.js/Express version
   - But you can start from scratch in any language
@@ -81,68 +119,3 @@ If there are any pre-existing patterns in the code that you don't like, feel fre
 - Use a web framework (eg. Django)
 - Persist data in an SQL based database
 
-## Getting Started
-
-### Option #1: Run the Python/Flask API
-
-This project is best run using **Python 3.7.9**.
-
-Install python dependencies:
-
-```shell
-cd python && pip install -r requirements.txt
-```
-
-Run the python tests:
-
-```shell
-cd python && pytest tests.py
-```
-
-Run the API (http://localhost:5000):
-
-```shell
-cd python && FLASK_APP=app python -m flask run
-```
-
-### Option #2: Run the Node/Express API
-
-This project is best run using **Node 14.17.x**.
-
-```shell
-cd node && npm i
-```
-
-Run the node tests:
-
-```shell
-cd node && npm test
-```
-
-Run the API (http://localhost:5000):
-
-```shell
-cd node && npm start
-```
-
-### Both: Run the JS/React Web Client
-
-This project is best run using **Node 14.17.x**.
-
-Install client dependencies:
-
-```shell
-cd web && npm i
-```
-
-Run the client tests:
-
-```shell
-cd web && npm test
-```
-
-Run the client (http://localhost:3000):
-
-```shell
-cd web && npm start
-```
