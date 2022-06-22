@@ -14,6 +14,10 @@ const DEFAULT_STATE = {
   currency: DEFAULT_CURRENCY,
 }
 
+const FORM_INPUT_NAME_DESCRIPTION = 'description';
+const FORM_INPUT_NAME_AMOUNT = 'amount';
+const FORM_INPUT_NAME_CURRENCY = 'currency';
+
 export default function Form(props) {
   const [state, setState] = useState(DEFAULT_STATE);
   const [errorMessages, setErrorMessages] = useState(null);
@@ -63,7 +67,7 @@ export default function Form(props) {
         <InputStyles
           type='text'
           placeholder='description'
-          name='description'
+          name={FORM_INPUT_NAME_DESCRIPTION}
           value={state.description}
           onChange={handleChange}
           data-testid='add_spending_description'
@@ -71,13 +75,13 @@ export default function Form(props) {
         <InputStyles
           type='number'
           placeholder='amount'
-          name='amount'
+          name={FORM_INPUT_NAME_AMOUNT}
           value={state.amount}
           onChange={handleChange}
           data-testid='add_spending_amount'
         />
         <SelectStyles
-          name='currency'
+          name={FORM_INPUT_NAME_CURRENCY}
           value={state.currency}
           onChange={handleChange}
           data-testid='add_spending_currency'
