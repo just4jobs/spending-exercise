@@ -2,12 +2,17 @@ import React from 'react';
 
 import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton } from '../styles/ComponentStyles';
 
-export default function CurrencyFilter(props) {
+export default function CurrencyFilter({currencies, setOrdering}) {
+
+  const handleOrderingChange = changeEvent => {
+    const newOrdering = changeEvent.target.value;
+    setOrdering(newOrdering);
+  }
 
   return (
     <>
       <FiltersWrapper>
-        <Orderings>
+        <Orderings onChange={handleOrderingChange}>
           <select>
             <option value='-spent_at'>Sort by Date descending (default)</option>
             <option value='spent_at'>Sort by Date ascending</option>
@@ -23,7 +28,7 @@ export default function CurrencyFilter(props) {
               ALL
             </CurrencyButton>
           </li>
-          {props.currencies.map(currency => <li key={currency}>
+          {currencies.map(currency => <li key={currency}>
             <CurrencyButton
               name={currency}
             >
