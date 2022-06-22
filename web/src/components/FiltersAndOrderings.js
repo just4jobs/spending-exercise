@@ -2,11 +2,18 @@ import React from 'react';
 
 import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton } from '../styles/ComponentStyles';
 
-export default function CurrencyFilter({currencies, setOrdering}) {
+const DEFAULT_NULL_FILTER = 'ALL'
+
+export default function CurrencyFilter({currencies, setOrdering, setFiltering}) {
 
   const handleOrderingChange = changeEvent => {
     const newOrdering = changeEvent.target.value;
     setOrdering(newOrdering);
+  }
+
+  const handleCurrencyFilterChange = clickEvent => {
+    const newFiltering = clickEvent.target.name;
+    setFiltering(newFiltering === DEFAULT_NULL_FILTER ? null : newFiltering);
   }
 
   return (
@@ -21,7 +28,7 @@ export default function CurrencyFilter({currencies, setOrdering}) {
           </select>
         </Orderings>
         <CurrencyFilters>
-          {['ALL', ...currencies].map(currency => <li key={currency}>
+          {[DEFAULT_NULL_FILTER, ...currencies].map(currency => <li key={currency} onClick={handleCurrencyFilterChange}>
             <CurrencyButton
               name={currency}
             >

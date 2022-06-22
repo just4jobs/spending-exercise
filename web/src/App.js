@@ -7,6 +7,7 @@ import Layout from './components/Layout';
 export default function App() {
   const [spendings, setSpendings] = useState([]);
   const [ordering, setOrdering] = useState('-spent_at');
+  const [filtering, setFiltering] = useState(null);
 
   const addSpending = (newSpending) => {
     setSpendings([...spendings, newSpending])
@@ -21,11 +22,16 @@ export default function App() {
             addSpending={addSpending}
             currencies={currencies}
           />
-          <FiltersAndOrderings currencies={currencies} setOrdering={setOrdering}/>
+          <FiltersAndOrderings
+            currencies={currencies}
+            setOrdering={setOrdering}
+            setFiltering={setFiltering}
+          />
           <SpendingList
             spendings={spendings}
             setSpendings={setSpendings}
             ordering={ordering}
+            filtering={filtering}
           />
       </Layout>
     </>
